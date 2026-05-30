@@ -339,7 +339,7 @@ function calcEntropyBits(password, useLetters, useNumbers, useSymbols, excludeSi
     let N = 0;
     if (useLetters)  N += poolSize('abcdefghijklmnopqrstuvwxyz') + poolSize('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     if (useNumbers)  N += poolSize('0123456789');
-    if (useSymbols)  N += '@$#*.!%^&'.length;
+    if (useSymbols)  N += '@$#*.%'.length;
 
     if (N <= 0) return 0;
 
