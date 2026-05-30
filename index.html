@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Credenciales | N1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Fondo animado -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">N1 Credentials</span>
+                    <span class="brand-sub">Generador Seguro v2.0</span>
+                </div>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" title="Cambiar tema" aria-label="Cambiar entre modo claro y oscuro">
+                <span class="theme-icon-dark">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </span>
+                <span class="theme-icon-light">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </span>
+            </button>
+        </header>
+
+        <!-- Card principal -->
+        <main class="card">
+
+            <!-- OUTPUT: Contraseña generada -->
+            <section class="output-section">
+                <div class="output-label">Credencial Generada</div>
+                <div class="output-group">
+                    <input
+                        type="password"
+                        id="password-output"
+                        class="password-display"
+                        readonly
+                        placeholder="— Pendiente de generar —"
+                        spellcheck="false"
+                        autocomplete="off"
+                    >
+                    <div class="output-actions">
+                        <button class="icon-btn" id="toggle-visibility" title="Mostrar/Ocultar contraseña" aria-label="Mostrar u ocultar contraseña">
+                            <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                <line x1="1" y1="1" x2="23" y2="23"/>
+                            </svg>
+                        </button>
+                        <button class="icon-btn copy-btn" id="copy-btn" title="Copiar contraseña" aria-label="Copiar contraseña al portapapeles">
+                            <svg class="icon-copy" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            <svg class="icon-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Entropía -->
+                <div class="entropy-row">
+                    <div class="entropy-bar-wrap">
+                        <div class="entropy-bar-bg">
+                            <div class="entropy-bar-fill" id="entropy-bar"></div>
+                        </div>
+                    </div>
+                    <div class="entropy-info">
+                        <span class="entropy-bits" id="entropy-bits">—</span>
+                        <span class="entropy-label-text" id="entropy-label">bits de entropía</span>
+                        <span class="entropy-badge" id="entropy-badge">—</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- SELECTOR DE ENTIDAD -->
+            <section class="entity-section">
+                <div class="section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Entidad
+                </div>
+                <div class="entity-grid" id="entity-grid">
+                    <button class="entity-btn active" data-prefix="Hp" data-entity="HPSA">
+                        <span class="entity-code">HPSA</span>
+                        <span class="entity-prefix">Hp···</span>
+                    </button>
+                    <button class="entity-btn" data-prefix="Tp" data-entity="TPSA">
+                        <span class="entity-code">TPSA</span>
+                        <span class="entity-prefix">Tp···</span>
+                    </button>
+                    <button class="entity-btn" data-prefix="Sp" data-entity="SPSA">
+                        <span class="entity-code">SPSA</span>
+                        <span class="entity-prefix">Sp···</span>
+                    </button>
+                    <button class="entity-btn" data-prefix="In" data-entity="INRE">
+                        <span class="entity-code">INRE</span>
+                        <span class="entity-prefix">In···</span>
+                    </button>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- LONGITUD CON SLIDER -->
+            <section class="length-section">
+                <div class="length-header">
+                    <div class="section-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                        Longitud Total
+                    </div>
+                    <div class="length-value-display">
+                        <span id="length-value-display">16</span>
+                        <span class="length-unit">chars</span>
+                    </div>
+                </div>
+                <div class="slider-track-wrap">
+                    <input type="range" id="length-slider" class="length-slider" min="6" max="64" value="16" step="1">
+                    <div class="slider-marks">
+                        <span>6</span>
+                        <span>16</span>
+                        <span>32</span>
+                        <span>48</span>
+                        <span>64</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- OPCIONES DE CARACTERES -->
+            <section class="options-section">
+                <div class="section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.07 4.93l-1.41 1.41"/>
+                        <path d="M4.93 4.93l1.41 1.41"/>
+                        <path d="M12 2v2M12 20v2M20 12h2M2 12h2"/>
+                        <path d="M19.07 19.07l-1.41-1.41"/>
+                        <path d="M4.93 19.07l1.41-1.41"/>
+                    </svg>
+                    Composición
+                </div>
+                <div class="options-grid">
+                    <label class="toggle-option">
+                        <input type="checkbox" id="inc-letters" checked>
+                        <span class="toggle-track"></span>
+                        <span class="toggle-info">
+                            <span class="toggle-name">Letras</span>
+                            <span class="toggle-desc">Aa – Zz</span>
+                        </span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="checkbox" id="inc-numbers" checked>
+                        <span class="toggle-track"></span>
+                        <span class="toggle-info">
+                            <span class="toggle-name">Dígitos</span>
+                            <span class="toggle-desc">0 – 9</span>
+                        </span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="checkbox" id="inc-symbols" checked>
+                        <span class="toggle-track"></span>
+                        <span class="toggle-info">
+                            <span class="toggle-name">Símbolos</span>
+                            <span class="toggle-desc">@$#*.</span>
+                        </span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="checkbox" id="exc-similar">
+                        <span class="toggle-track"></span>
+                        <span class="toggle-info">
+                            <span class="toggle-name">Excluir Similares</span>
+                            <span class="toggle-desc">0O, 1lI, 2Z…</span>
+                        </span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- PALABRA CLAVE -->
+            <section class="keyword-section">
+                <label class="toggle-option keyword-toggle-header">
+                    <input type="checkbox" id="use-keyword">
+                    <span class="toggle-track"></span>
+                    <span class="toggle-info">
+                        <span class="toggle-name">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                            </svg>
+                            Palabra Clave
+                        </span>
+                        <span class="toggle-desc">Incluir base semántica en la contraseña</span>
+                    </span>
+                </label>
+                <div class="keyword-input-wrap" id="keyword-input-wrap">
+                    <input
+                        type="text"
+                        id="keyword-input"
+                        class="keyword-input"
+                        placeholder="Ej: seguridad, admin, red…"
+                        maxlength="20"
+                        spellcheck="false"
+                        autocomplete="off"
+                    >
+                    <div class="keyword-hint">Solo letras, sin espacios ni símbolos</div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- AUTOCOPIADO -->
+            <section class="autocopy-section">
+                <label class="toggle-option">
+                    <input type="checkbox" id="auto-copy">
+                    <span class="toggle-track"></span>
+                    <span class="toggle-info">
+                        <span class="toggle-name">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                            Autocopiado Inteligente
+                        </span>
+                        <span class="toggle-desc">Copiar automáticamente al generar</span>
+                    </span>
+                </label>
+            </section>
+
+            <div class="divider"></div>
+
+            <!-- BOTÓN GENERAR -->
+            <button class="generate-btn" id="generate-btn" onclick="generatePassword()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <polyline points="1 20 1 14 7 14"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                Generar Credencial
+            </button>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <span>N1 · Generador Seguro · CSPRNG + Fisher-Yates</span>
+        </footer>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
