@@ -763,10 +763,11 @@ body {
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%) translateY(10px);
+    /* Fondo sólido garantizado — nunca transparente */
     background: var(--surface);
     color: var(--text);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
+    border: 1.5px solid var(--border);
+    padding: 10px 22px;
     border-radius: 99px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.8rem;
@@ -776,8 +777,15 @@ body {
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
     white-space: nowrap;
-    box-shadow: var(--shadow-sm);
-    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 200;
+}
+
+[data-theme="dark"] .toast {
+    background: #1e2438;
+}
+[data-theme="light"] .toast {
+    background: #ffffff;
 }
 
 .toast.show {
@@ -786,15 +794,27 @@ body {
 }
 
 .toast.success {
-    background: var(--success-glow);
+    background: #1c2e1f;
     border-color: var(--success);
     color: var(--success);
 }
 
+[data-theme="light"] .toast.success {
+    background: #f0fdf4;
+    border-color: #16a34a;
+    color: #15803d;
+}
+
 .toast.error {
-    background: var(--error-glow);
+    background: #2e1c22;
     border-color: var(--error);
     color: var(--error);
+}
+
+[data-theme="light"] .toast.error {
+    background: #fff1f2;
+    border-color: #dc2626;
+    color: #b91c1c;
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */
@@ -823,10 +843,109 @@ body {
     transition: all 0.2s ease;
 }
 
-/* ─── Responsive ─────────────────────────────────────────── */
-@media (max-width: 480px) {
-    body { padding: 16px 12px 50px; }
+/* ─── Responsive: Desktop / Laptop / Tablet (sin scroll) ─── */
+
+/*
+   En pantallas >= 700px el layout pasa a dos columnas dentro
+   de la card, distribuyendo las secciones de forma que todo
+   el contenido quepa en la altura de la ventana sin scroll.
+
+   Columna izquierda: Output + Entropía + Entidad + Longitud
+   Columna derecha:   Composición + Palabra Clave + Autocopiado + Botón
+*/
+
+@media (min-height: 560px) and (min-width: 700px) {
+
+    body {
+        align-items: center;
+        padding: 16px 24px;
+    }
+
+    .app-wrapper {
+        max-width: 860px;
+    }
+
+    .card {
+        padding: 22px 0;
+    }
+
+    /* Grid de 2 columnas con separador central */
+    .card-grid {
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr;
+        column-gap: 0;
+        align-items: start;
+    }
+
+    /* Separador vertical entre columnas */
+    .card-grid::after {
+        content: '';
+        display: block;
+        grid-column: 2;
+        grid-row: 1;
+        background: var(--border);
+        width: 1px;
+        align-self: stretch;
+        min-height: 100%;
+    }
+
+    /* Padding interno de cada columna */
+    .col-left {
+        padding: 0 26px 0 26px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .col-right {
+        padding: 0 26px 0 26px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Dividers más compactos en desktop */
+    .divider {
+        margin: 13px 0;
+    }
+
+    /* Reducir padding del toggle para ganar altura */
+    .toggle-option {
+        padding: 8px 11px;
+    }
+
+    /* Entity grid: 2×2 en desktop para equilibrar */
+    .entity-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Output font un poco más compacto */
+    .password-display {
+        padding: 11px 13px;
+        font-size: 0.93rem;
+    }
+
+    /* Botón generar compacto */
+    .generate-btn {
+        padding: 12px;
+        margin-top: auto;
+    }
+
+    /* Footer */
+    .app-footer {
+        margin-top: 12px;
+    }
+}
+
+/* Tablet apaisada y pantallas medianas (700–900px) */
+@media (min-width: 700px) and (max-width: 900px) {
+    .app-wrapper { max-width: 760px; }
+}
+
+/* Pantallas pequeñas (<700px): columna única original */
+@media (max-width: 699px) {
+    body { padding: 16px 12px 50px; align-items: flex-start; }
     .card { padding: 20px 16px; }
+    .card-grid { display: contents; }
+    .col-left, .col-right { display: contents; }
     .entity-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .entity-btn { padding: 10px 4px; }
     .entity-code { font-size: 0.75rem; }
