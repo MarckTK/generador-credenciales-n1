@@ -241,7 +241,7 @@ function generatePassword() {
     const poolLower   = buildPool('abcdefghijklmnopqrstuvwxyz');
     const poolUpper   = buildPool('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     const poolDigits  = buildPool('0123456789');
-    const poolSymbols = '@$#*.!%^&';  // Pool ampliado
+    const poolSymbols = '@$#*.%';  // Pool ampliado
 
     // ── Validar que los pools no queden vacíos ────────────
     if (useLetters && poolLower.length === 0 && poolUpper.length === 0) {
